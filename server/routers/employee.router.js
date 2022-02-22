@@ -4,6 +4,6 @@ const { getAllEmployees } = require('../controllers/employee.controller');
 
 const employeeRouter = express.Router();
 
-employeeRouter.get('/employees', requiresAuth(), getAllEmployees);
+employeeRouter.get('/employees', getAllEmployees);
 
-module.exports = eventRouter;
+module.exports = employeeRouter;
