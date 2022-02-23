@@ -9,6 +9,7 @@ const useStyles = makeStyles({
   root: {
     display: 'flex',
     flexDirection: 'column',
+    maxWidth: '600px',
   },
 });
 

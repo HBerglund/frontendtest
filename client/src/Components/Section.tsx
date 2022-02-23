@@ -9,6 +9,7 @@ type Props = {
 const useStyles = makeStyles({
   section: {
     padding: '2rem',
+    maxWidth: '600px',
   },
 });
 

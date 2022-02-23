@@ -5,6 +5,7 @@ import Section from './Section';
 
 const useStyles = makeStyles({
   root: {
+    padding: '20px',
     background: '#2D3142',
   },
   text: {
@@ -16,11 +17,11 @@ const Header = () => {
   const classes = useStyles();
 
   return (
-    <Section style={{ background: '#2D3142' }}>
+    <div className={classes.root}>
       <Typography component='h1' variant='h3' className={classes.text}>
         Company admin interface
       </Typography>
-    </Section>
+    </div>
   );
 };
 
