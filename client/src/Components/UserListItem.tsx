@@ -44,7 +44,6 @@ const UserListItem = ({ employee }: UserListItemProps) => {
 
   const handleSaveClick = () => {
     setEdited(false);
-    console.log(employeeToUpdate);
     updateEmployee(employeeToUpdate);
   };
   return (
