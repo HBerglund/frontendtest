@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import { CompanyType } from '../Data/CompaniesContext';
 import {
@@ -50,8 +50,9 @@ const CompanyAccordion = ({ company }: CompanyAccordionProps) => {
         </Typography>
       </AccordionSummary>
       <AccordionDetails className={classes.accordionDetails}>
-        {employees.map((employee, index) => {
-          if (employee.companyID === company.id) {
+        {employees
+          .filter((employee) => employee.companyID === company.id)
+          .map((employee, index) => {
             return (
               <div key={employee.id}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -67,9 +68,7 @@ const CompanyAccordion = ({ company }: CompanyAccordionProps) => {
                 <Divider style={{ marginBottom: '1rem' }} />
               </div>
             );
-          }
-          return null;
-        })}
+          })}
       </AccordionDetails>
     </Accordion>
   );

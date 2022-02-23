@@ -3,7 +3,7 @@ import { makeStyles } from '@mui/styles';
 import Section from '../Components/Section';
 import { EmployeesContext } from '../Data/EmployeesContext';
 import { Typography } from '@mui/material';
-import UserListItem from '../Components/UserListItem';
+import EmployeeListItem from '../Components/EmployeeListItem';
 
 const useStyles = makeStyles({
   root: {
@@ -27,7 +27,7 @@ const UnemployedPage = () => {
         </Typography>
         {employees.map((e, index) => {
           if (e.companyID === '') {
-            return <UserListItem employee={e} key={index} />;
+            return <EmployeeListItem employee={e} key={index} />;
           } else return null;
         })}
       </div>

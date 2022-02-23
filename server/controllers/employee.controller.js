@@ -39,7 +39,7 @@ const updateEmployee = async (req, res) => {
     const result = await firestore.collection('employees').doc(id).update(body);
     return res
       .status(200)
-      .send({ result, message: 'Successfully updated user' });
+      .send({ result, message: 'Successfully updated employee' });
   } catch (error) {
     res.status(400).send(error.message);
   }

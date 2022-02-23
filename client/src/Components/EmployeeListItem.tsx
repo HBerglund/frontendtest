@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { CompaniesContext } from '../Data/CompaniesContext';
 
-interface UserListItemProps {
+interface EmployeeListItemProps {
   employee: EmployeeType;
 }
 
@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   },
 });
 
-const UserListItem = ({ employee }: UserListItemProps) => {
+const EmployeeListItem = ({ employee }: EmployeeListItemProps) => {
   const classes = useStyles();
   const [employeeToUpdate, setEmployeeToUpdate] = useState<EmployeeType>({
     name: employee.name,
@@ -71,4 +71,4 @@ const UserListItem = ({ employee }: UserListItemProps) => {
   );
 };
 
-export default UserListItem;
+export default EmployeeListItem;
