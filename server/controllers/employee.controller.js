@@ -23,12 +23,25 @@ const saveNewEmployee = async (req, res) => {
   try {
     const data = req.body;
     const result = await firestore.collection('employees').add({ ...data });
+    return res.status(201).send({
+      result: result,
+      message: 'Successfully saved new person to database',
+    });
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+const removeCompanyFromUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await firestore
+      .collection('employees')
+      .doc(id)
+      .update({ companyID: '' });
     return res
-      .status(201)
-      .send({
-        result: result,
-        message: 'Successfully saved new person to database',
-      });
+      .status(200)
+      .send({ result, message: 'Successfully updated user' });
   } catch (error) {
     res.status(400).send(error.message);
   }
@@ -37,4 +50,5 @@ const saveNewEmployee = async (req, res) => {
 module.exports = {
   getAllEmployees,
   saveNewEmployee,
+  removeCompanyFromUser,
 };

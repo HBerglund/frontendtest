@@ -10,9 +10,9 @@ import {
   Button,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { companies } from '../arbData';
 import { EmployeesContext, EmployeeType } from '../Data/EmployeesContext';
 import Message from '../Components/Message';
+import { CompaniesContext } from '../Data/CompaniesContext';
 
 const useStyles = makeStyles({
   root: {
@@ -28,14 +28,16 @@ const useStyles = makeStyles({
   },
 });
 
-const Employee = () => {
+const EmployeesPage = () => {
   const classes = useStyles();
   const employeesContext = useContext(EmployeesContext);
   const { saveNewEmployee } = employeesContext;
+  const companiesContext = useContext(CompaniesContext);
+  const { companies } = companiesContext;
 
   const [newEmployee, setNewEmployee] = useState<EmployeeType>({
     name: '',
-    company: '',
+    companyID: '',
   });
 
   const handleFormChange = (
@@ -52,7 +54,7 @@ const Employee = () => {
     saveNewEmployee(newEmployee);
     setNewEmployee({
       name: '',
-      company: '',
+      companyID: '',
     });
   };
 
@@ -77,13 +79,13 @@ const Employee = () => {
           </InputLabel>
           <Select
             labelId='companies'
-            name='company'
+            name='companyID'
             onChange={handleFormChange}
-            value={newEmployee.company}
+            value={newEmployee.companyID}
           >
-            {companies.map((c, i) => (
-              <MenuItem key={i} value={c}>
-                {c}
+            {companies.map(({ name, id }) => (
+              <MenuItem key={id} value={id}>
+                {name}
               </MenuItem>
             ))}
           </Select>
@@ -102,4 +104,4 @@ const Employee = () => {
   );
 };
 
-export default Employee;
+export default EmployeesPage;

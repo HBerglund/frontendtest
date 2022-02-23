@@ -1,8 +1,9 @@
 import { createContext, FC, useEffect, useState } from 'react';
 
 export type EmployeeType = {
+  id?: string;
   name: string;
-  company?: string;
+  companyID?: string;
 };
 
 interface EmployeeValue {
@@ -10,6 +11,7 @@ interface EmployeeValue {
   loading: boolean | undefined;
   message: string;
   saveNewEmployee: (data: EmployeeType) => void;
+  removeCompanyFromUser: (userID: string) => void;
 }
 
 export const EmployeesContext = createContext<EmployeeValue>({
@@ -17,6 +19,7 @@ export const EmployeesContext = createContext<EmployeeValue>({
   loading: false,
   message: '',
   saveNewEmployee: () => {},
+  removeCompanyFromUser: () => {},
 });
 
 const EmployeesProvider: FC<{}> = ({ children }) => {
@@ -53,16 +56,33 @@ const EmployeesProvider: FC<{}> = ({ children }) => {
     setLoading(false);
   };
 
+  const removeCompanyFromUser = async (userId: string) => {
+    setLoading(true);
+    const response = await fetch(`/employees/${userId}`, {
+      method: 'PUT',
+    });
+    const result = await response.json();
+    if (result.error) {
+      setMessage(result.error.message);
+    }
+    setMessage(result.message);
+    getAllEmployees();
+    setLoading(false);
+  };
+
   useEffect(() => {
     getAllEmployees();
   }, []);
 
-  console.log('employees: ', employees);
-  console.log('message: ', message);
-
   return (
     <EmployeesContext.Provider
-      value={{ employees, loading, message, saveNewEmployee }}
+      value={{
+        employees,
+        loading,
+        message,
+        saveNewEmployee,
+        removeCompanyFromUser,
+      }}
     >
       {children}
     </EmployeesContext.Provider>

@@ -1,14 +1,16 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from '../Components/Header';
-import Employee from './Employee';
+import CompaniesPage from './CompaniesPage';
+import EmployeesPage from './EmployeesPage';
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path='/' element={<Employee />} />
+        <Route path='/' element={<EmployeesPage />} />
+        <Route path='/companies' element={<CompaniesPage />} />
       </Routes>
     </BrowserRouter>
   );
