@@ -6,6 +6,7 @@ import {
   ThemeProvider,
   responsiveFontSizes,
 } from '@mui/material/styles';
+import EmployeesProvider from './Data/EmployeesContext';
 
 const theme = responsiveFontSizes(
   createTheme({
@@ -23,7 +24,9 @@ const theme = responsiveFontSizes(
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Router />
+      <EmployeesProvider>
+        <Router />
+      </EmployeesProvider>
     </ThemeProvider>
   );
 }

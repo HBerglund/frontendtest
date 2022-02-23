@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useContext, useState } from 'react';
 import Section from '../Components/Section';
 import {
-  FormGroup,
   TextField,
   InputLabel,
   Select,
@@ -12,6 +11,8 @@ import {
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { companies } from '../arbData';
+import { EmployeesContext, EmployeeType } from '../Data/EmployeesContext';
+import Message from '../Components/Message';
 
 const useStyles = makeStyles({
   root: {
@@ -29,19 +30,30 @@ const useStyles = makeStyles({
 
 const Employee = () => {
   const classes = useStyles();
-  const [name, setName] = useState('');
-  const [company, setCompany] = useState('');
+  const employeesContext = useContext(EmployeesContext);
+  const { saveNewEmployee } = employeesContext;
 
-  const handleCompanySelect = (e: SelectChangeEvent<string>) => {
+  const [newEmployee, setNewEmployee] = useState<EmployeeType>({
+    name: '',
+    company: '',
+  });
+
+  const handleFormChange = (
+    e: SelectChangeEvent<string> | ChangeEvent<HTMLInputElement>
+  ) => {
     const { value } = e.target;
-    setCompany(value);
+    setNewEmployee({
+      ...newEmployee,
+      [e.target.name]: value,
+    });
   };
 
   const handleSubmitForm = () => {
-    console.log('name: ', name);
-    console.log('company: ', company);
-    setName('');
-    setCompany('');
+    saveNewEmployee(newEmployee);
+    setNewEmployee({
+      name: '',
+      company: '',
+    });
   };
 
   return (
@@ -54,15 +66,20 @@ const Employee = () => {
           <InputLabel style={{ marginBottom: '5px' }} id='name'>
             Name
           </InputLabel>
-          <TextField onChange={(e) => setName(e.target.value)} value={name} />
+          <TextField
+            name='name'
+            id='name'
+            onChange={(e: any) => handleFormChange(e)}
+            value={newEmployee.name}
+          />
           <InputLabel style={{ marginBottom: '5px' }} id='companies'>
             Companies
           </InputLabel>
           <Select
             labelId='companies'
             name='company'
-            onChange={handleCompanySelect}
-            value={company}
+            onChange={handleFormChange}
+            value={newEmployee.company}
           >
             {companies.map((c, i) => (
               <MenuItem key={i} value={c}>
@@ -79,6 +96,7 @@ const Employee = () => {
             Save
           </Button>
         </div>
+        <Message />
       </div>
     </Section>
   );
