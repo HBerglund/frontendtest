@@ -32,13 +32,11 @@ const saveNewEmployee = async (req, res) => {
   }
 };
 
-const removeCompanyFromUser = async (req, res) => {
+const updateEmployee = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await firestore
-      .collection('employees')
-      .doc(id)
-      .update({ companyID: '' });
+    const body = req.body;
+    const result = await firestore.collection('employees').doc(id).update(body);
     return res
       .status(200)
       .send({ result, message: 'Successfully updated user' });
@@ -50,5 +48,5 @@ const removeCompanyFromUser = async (req, res) => {
 module.exports = {
   getAllEmployees,
   saveNewEmployee,
-  removeCompanyFromUser,
+  updateEmployee,
 };

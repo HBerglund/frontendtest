@@ -11,7 +11,7 @@ interface EmployeeValue {
   loading: boolean | undefined;
   message: string;
   saveNewEmployee: (data: EmployeeType) => void;
-  removeCompanyFromUser: (userID: string) => void;
+  updateEmployee: (data: EmployeeType) => void;
 }
 
 export const EmployeesContext = createContext<EmployeeValue>({
@@ -19,7 +19,7 @@ export const EmployeesContext = createContext<EmployeeValue>({
   loading: false,
   message: '',
   saveNewEmployee: () => {},
-  removeCompanyFromUser: () => {},
+  updateEmployee: () => {},
 });
 
 const EmployeesProvider: FC<{}> = ({ children }) => {
@@ -56,10 +56,14 @@ const EmployeesProvider: FC<{}> = ({ children }) => {
     setLoading(false);
   };
 
-  const removeCompanyFromUser = async (userId: string) => {
+  const updateEmployee = async (employee: EmployeeType) => {
     setLoading(true);
-    const response = await fetch(`/employees/${userId}`, {
+    const response = await fetch(`/employees/${employee.id}`, {
       method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(employee),
     });
     const result = await response.json();
     if (result.error) {
@@ -81,7 +85,7 @@ const EmployeesProvider: FC<{}> = ({ children }) => {
         loading,
         message,
         saveNewEmployee,
-        removeCompanyFromUser,
+        updateEmployee,
       }}
     >
       {children}

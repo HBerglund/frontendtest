@@ -4,7 +4,12 @@ GET http://localhost:4000/employees
 
 ### GET ALL IN COMPANY
 
-PUT http://localhost:4000/employees/ZrWxXXhtXSAl76sNxup6
+PUT http://localhost:4000/employees/wMCSaRld6wNs40f8gEVV
+Content-Type: application/json
+
+{
+    "companyID": "FE6qqxOs6MhsiqURcQFs"
+}
 
 ### POST ONE
 

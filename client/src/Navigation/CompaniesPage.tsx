@@ -36,7 +36,9 @@ const CompaniesPage = () => {
     <Section>
       <div className={classes.root}>
         <div className={classes.title}>
-          <Typography>Save a new company to the database</Typography>
+          <Typography variant='h5'>
+            Save a new company to the database
+          </Typography>
         </div>
         <div className={classes.form}>
           <InputLabel style={{ marginBottom: '5px' }} id='CompanyName'>

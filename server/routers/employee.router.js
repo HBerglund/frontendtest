@@ -3,13 +3,13 @@ const express = require('express');
 const {
   getAllEmployees,
   saveNewEmployee,
-  removeCompanyFromUser,
+  updateEmployee,
 } = require('../controllers/employee.controller');
 
 const employeeRouter = express.Router();
 
 employeeRouter.get('/employees', getAllEmployees);
 employeeRouter.post('/employees', saveNewEmployee);
-employeeRouter.put('/employees/:id', removeCompanyFromUser);
+employeeRouter.put('/employees/:id', updateEmployee);
 
 module.exports = employeeRouter;

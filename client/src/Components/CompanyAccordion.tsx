@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
-import { EmployeesContext } from '../Data/EmployeesContext';
+import { EmployeesContext, EmployeeType } from '../Data/EmployeesContext';
 
 interface CompanyAccordionProps {
   company: CompanyType;
@@ -32,13 +32,11 @@ const useStyles = makeStyles({
 const CompanyAccordion = ({ company }: CompanyAccordionProps) => {
   const classes = useStyles();
   const employeesContext = useContext(EmployeesContext);
-  const { employees } = employeesContext;
+  const { employees, updateEmployee } = employeesContext;
 
-  const handleRemovePerson = (id: string) => {
-    employeesContext.removeCompanyFromUser(id);
+  const handleRemovePerson = (employee: EmployeeType) => {
+    updateEmployee({ ...employee, companyID: '' });
   };
-
-  console.log(employees);
 
   return (
     <Accordion className={classes.root}>
@@ -52,16 +50,16 @@ const CompanyAccordion = ({ company }: CompanyAccordionProps) => {
         </Typography>
       </AccordionSummary>
       <AccordionDetails className={classes.accordionDetails}>
-        {employees.map(({ name, companyID, id }, index) => {
-          if (companyID === company.id) {
+        {employees.map((employee, index) => {
+          if (employee.companyID === company.id) {
             return (
-              <div key={id}>
+              <div key={employee.id}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <Typography mr={2} key={index}>
-                    {name}
+                    {employee.name}
                   </Typography>
-                  {id && (
-                    <IconButton onClick={() => handleRemovePerson(id)}>
+                  {employee.id && (
+                    <IconButton onClick={() => handleRemovePerson(employee)}>
                       <PersonRemoveIcon />
                     </IconButton>
                   )}
