@@ -49,19 +49,21 @@ const EmployeeListItem = ({ employee }: EmployeeListItemProps) => {
   return (
     <div className={classes.root}>
       <Typography>{employee.name}</Typography>
-      <Select
-        labelId='companies'
-        name='companyID'
-        value={employeeToUpdate.companyID}
-        onChange={handleEmployeeChange}
-        style={{ width: '100%', marginBottom: '1rem' }}
-      >
-        {companies.map(({ name, id }) => (
-          <MenuItem key={id} value={id}>
-            {name}
-          </MenuItem>
-        ))}
-      </Select>
+      {companies.length !== 0 && (
+        <Select
+          labelId='companies'
+          name='companyID'
+          value={employeeToUpdate.companyID}
+          onChange={handleEmployeeChange}
+          style={{ width: '100%', marginBottom: '1rem' }}
+        >
+          {companies.map(({ name, id }) => (
+            <MenuItem key={id} value={id}>
+              {name}
+            </MenuItem>
+          ))}
+        </Select>
+      )}
       {edited && (
         <Button variant='contained' onClick={handleSaveClick}>
           Save changes

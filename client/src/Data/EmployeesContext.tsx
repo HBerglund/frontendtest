@@ -34,6 +34,7 @@ const EmployeesProvider: FC<{}> = ({ children }) => {
     if (result.error) {
       setMessage(result.error.message);
     }
+    console.log(result.collection);
     setEmployees(result.collection);
     setLoading(false);
   };

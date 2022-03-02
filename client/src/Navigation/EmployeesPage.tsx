@@ -84,6 +84,7 @@ const EmployeesPage = () => {
             name='companyID'
             onChange={handleFormChange}
             value={newEmployee.companyID}
+            disabled={companies.length ? false : true}
           >
             {companies.map(({ name, id }) => (
               <MenuItem key={id} value={id}>

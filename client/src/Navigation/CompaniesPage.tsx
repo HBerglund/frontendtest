@@ -5,6 +5,7 @@ import { makeStyles } from '@mui/styles';
 import Message from '../Components/Message';
 import { CompaniesContext, CompanyType } from '../Data/CompaniesContext';
 import CompanyAccordion from '../Components/CompanyAccordion';
+import { EmployeesContext } from '../Data/EmployeesContext';
 
 const useStyles = makeStyles({
   root: {
@@ -62,9 +63,9 @@ const CompaniesPage = () => {
         </div>
         <Message />
       </div>
-      {companies.map((c, index) => (
-        <CompanyAccordion key={index} company={c} />
-      ))}
+      {companies.map((c, index) => {
+        return <CompanyAccordion key={index} company={c} />;
+      })}
     </Section>
   );
 };

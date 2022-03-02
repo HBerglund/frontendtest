@@ -33,10 +33,24 @@ const CompanyAccordion = ({ company }: CompanyAccordionProps) => {
   const classes = useStyles();
   const employeesContext = useContext(EmployeesContext);
   const { employees, updateEmployee } = employeesContext;
+  const [employeesArr, setEmployeesArr] = useState<EmployeeType[]>([]);
+
+  const saveEmployeesArr = () => {
+    for (let i = 0; i < employees.length; i++) {
+      if (employees[i].companyID === company.id) {
+        setEmployeesArr([...employeesArr, employees[i]]);
+      }
+    }
+  };
 
   const handleRemovePerson = (employee: EmployeeType) => {
     updateEmployee({ ...employee, companyID: '' });
   };
+
+  useEffect(() => {
+    saveEmployeesArr();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [employees, company]);
 
   return (
     <Accordion className={classes.root}>
@@ -50,6 +64,9 @@ const CompanyAccordion = ({ company }: CompanyAccordionProps) => {
         </Typography>
       </AccordionSummary>
       <AccordionDetails className={classes.accordionDetails}>
+        {!employeesArr.length && (
+          <Typography mr={2}>This company has no employees</Typography>
+        )}
         {employees
           .filter((employee) => employee.companyID === company.id)
           .map((employee, index) => {
