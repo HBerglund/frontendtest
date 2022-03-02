@@ -76,22 +76,26 @@ const EmployeesPage = () => {
             onChange={(e: any) => handleFormChange(e)}
             value={newEmployee.name}
           />
-          <InputLabel style={{ marginBottom: '5px' }} id='companies'>
-            Companies
-          </InputLabel>
-          <Select
-            labelId='companies'
-            name='companyID'
-            onChange={handleFormChange}
-            value={newEmployee.companyID}
-            disabled={companies.length ? false : true}
-          >
-            {companies.map(({ name, id }) => (
-              <MenuItem key={id} value={id}>
-                {name}
-              </MenuItem>
-            ))}
-          </Select>
+          {companies.length !== 0 && (
+            <>
+              <InputLabel style={{ marginBottom: '5px' }} id='companies'>
+                Companies
+              </InputLabel>
+              <Select
+                labelId='companies'
+                name='companyID'
+                onChange={handleFormChange}
+                value={newEmployee.companyID}
+                disabled={companies.length ? false : true}
+              >
+                {companies.map(({ name, id }) => (
+                  <MenuItem key={id} value={id}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </>
+          )}
           <Button
             variant='contained'
             type='submit'

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { EmployeesContext } from '../Data/EmployeesContext';
+import { CompaniesContext } from '../Data/CompaniesContext';
 
 const useStyles = makeStyles({
   root: {
@@ -18,20 +19,20 @@ const useStyles = makeStyles({
 const Message = () => {
   const employeesContext = useContext(EmployeesContext);
   const { message } = employeesContext;
-  const [showMessage, setShowMessage] = useState(false);
+  const companiesContext = useContext(CompaniesContext);
+
   const classes = useStyles();
 
-  useEffect(() => {
-    setShowMessage(true);
-    setTimeout(() => {
-      setShowMessage(false);
-    }, 2000);
-  }, []);
-
-  if (showMessage) {
+  if (message.length) {
     return (
       <div className={classes.root}>
         <Typography>{message}</Typography>
+      </div>
+    );
+  } else if (companiesContext.message.length) {
+    return (
+      <div className={classes.root}>
+        <Typography>{companiesContext.message}</Typography>
       </div>
     );
   }

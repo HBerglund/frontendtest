@@ -5,6 +5,7 @@ import { EmployeesContext } from '../Data/EmployeesContext';
 import { Typography } from '@mui/material';
 import EmployeeListItem from '../Components/EmployeeListItem';
 import { CompaniesContext } from '../Data/CompaniesContext';
+import Message from '../Components/Message';
 
 const useStyles = makeStyles({
   root: {
@@ -26,14 +27,15 @@ const UnemployedPage = () => {
       <div className={classes.root}>
         <Typography variant='h5'>All unemployed people below</Typography>
         {companies.length ? (
-          <Typography variant='body2' mb={2}>
+          <Typography variant='body1' mb={2}>
             Choose a company in the dropdown to connect a person
           </Typography>
         ) : (
-          <Typography variant='body2' mb={2}>
+          <Typography variant='body1' mb={2}>
             There are no companies in the database
           </Typography>
         )}
+        <Message />
         {employees.map((e, index) => {
           if (e.companyID === '') {
             return <EmployeeListItem employee={e} key={index} />;

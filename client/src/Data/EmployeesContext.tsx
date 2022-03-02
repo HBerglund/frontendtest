@@ -8,7 +8,6 @@ export type EmployeeType = {
 
 interface EmployeeValue {
   employees: EmployeeType[];
-  loading: boolean | undefined;
   message: string;
   saveNewEmployee: (data: EmployeeType) => void;
   updateEmployee: (data: EmployeeType) => void;
@@ -16,19 +15,16 @@ interface EmployeeValue {
 
 export const EmployeesContext = createContext<EmployeeValue>({
   employees: [],
-  loading: false,
   message: '',
   saveNewEmployee: () => {},
   updateEmployee: () => {},
 });
 
 const EmployeesProvider: FC<{}> = ({ children }) => {
-  const [loading, setLoading] = useState(false);
   const [employees, setEmployees] = useState([]);
   const [message, setMessage] = useState<string>('');
 
   const getAllEmployees = async () => {
-    setLoading(true);
     const response = await fetch('/employees');
     const result = await response.json();
     if (result.error) {
@@ -36,11 +32,9 @@ const EmployeesProvider: FC<{}> = ({ children }) => {
     }
     console.log(result.collection);
     setEmployees(result.collection);
-    setLoading(false);
   };
 
   const saveNewEmployee = async (newEmployee: EmployeeType) => {
-    setLoading(true);
     const response = await fetch('/employees', {
       method: 'POST',
       headers: {
@@ -52,13 +46,12 @@ const EmployeesProvider: FC<{}> = ({ children }) => {
     if (result.error) {
       setMessage(result.error.message);
     }
+    console.log(result.message);
     setMessage(result.message);
     getAllEmployees();
-    setLoading(false);
   };
 
   const updateEmployee = async (employee: EmployeeType) => {
-    setLoading(true);
     const response = await fetch(`/employees/${employee.id}`, {
       method: 'PUT',
       headers: {
@@ -72,18 +65,22 @@ const EmployeesProvider: FC<{}> = ({ children }) => {
     }
     setMessage(result.message);
     getAllEmployees();
-    setLoading(false);
   };
 
   useEffect(() => {
     getAllEmployees();
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setMessage('');
+    }, 2000);
+  }, [message]);
+
   return (
     <EmployeesContext.Provider
       value={{
         employees,
-        loading,
         message,
         saveNewEmployee,
         updateEmployee,
